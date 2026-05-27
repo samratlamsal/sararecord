@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astra Nepal | Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { display: ["Manrope", "Arial", "sans-serif"] },
+            colors: {
+              astra: {
+                black: "#050505",
+                gold: "#D6A84A",
+                softGold: "#F3D98B",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-astra-black font-display text-white">
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const products = [
+        ["Summit Shell Jacket", "Outerwear", 7800, "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85"],
+        ["ASTRA Heavy Hoodie", "Hoodies", 5200, "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85"],
+        ["Valley Cargo Pants", "Bottoms", 4600, "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85"],
+        ["Himalayan Graphic Tee", "Tees", 2400, "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=900&q=85"],
+      ];
+
+      function App() {
+        const [cart, setCart] = React.useState([]);
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        const add = (product) => setCart([...cart, { name: product[0], price: product[2] }]);
+
+        return (
+          <div>
+            <header className="sticky top-0 z-20 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+              <nav className="mx-auto flex min-h-20 w-[min(1180px,calc(100%_-_24px))] items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <img className="h-12 w-12 rounded-xl object-cover ring-1 ring-astra-gold/60" src="public/astra-nepal-logo.png" alt="Astra Nepal logo" />
+                  <div>
+                    <strong className="block text-lg tracking-wide">ASTRA</strong>
+                    <span className="block text-xs font-black uppercase tracking-[0.28em] text-astra-gold">Nepal</span>
+                  </div>
+                </div>
+                <div className="rounded-full border border-astra-gold/40 px-4 py-2 text-sm font-black text-astra-gold">
+                  Cart {cart.length}
+                </div>
+              </nav>
+            </header>
+
+            <section className="mx-auto grid min-h-[calc(100vh-80px)] w-[min(1180px,calc(100%_-_24px))] items-center gap-12 py-16 lg:grid-cols-[.95fr_1.05fr]">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.28em] text-astra-gold">Astra Nepal Streetwear</p>
+                <h1 className="mt-5 text-[clamp(3.5rem,11vw,8.2rem)] font-black uppercase leading-[.82]">
+                  Premium fits for the city.
+                </h1>
+                <p className="mt-6 max-w-xl text-lg text-white/65">
+                  A black, white, and gold streetwear store with product cards, cart preview, and checkout-ready layout.
+                </p>
+                <a className="mt-8 inline-flex rounded-full bg-astra-gold px-6 py-4 font-black text-black" href="#shop">
+                  Shop collection
+                </a>
+              </div>
+              <div className="rounded-[2rem] border border-white/10 bg-white/[.04] p-4 shadow-[0_24px_80px_rgba(214,168,74,.18)]">
+                <img className="h-[560px] w-full rounded-[1.4rem] object-cover" src="public/astra-nepal-logo.png" alt="Astra Nepal logo large" />
+              </div>
+            </section>
+
+            <section id="shop" className="mx-auto w-[min(1180px,calc(100%_-_24px))] py-16">
+              <div className="mb-8">
+                <p className="text-xs font-black uppercase tracking-[0.28em] text-astra-gold">Shop</p>
+                <h2 className="mt-3 text-5xl font-black uppercase md:text-7xl">Latest drop</h2>
+              </div>
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+                {products.map((product) => (
+                  <article className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/[.04]" key={product[0]}>
+                    <img className="h-72 w-full object-cover" src={product[3]} alt={product[0]} />
+                    <div className="p-5">
+                      <p className="text-xs font-black uppercase tracking-[.2em] text-astra-gold">{product[1]}</p>
+                      <h3 className="mt-1 text-xl font-black">{product[0]}</h3>
+                      <p className="mt-2 font-black text-astra-softGold">NPR {product[2].toLocaleString("en-IN")}</p>
+                      <button className="mt-4 w-full rounded-full bg-astra-gold px-4 py-3 font-black text-black" onClick={() => add(product)}>
+                        Add to cart
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="mx-auto grid w-[min(1180px,calc(100%_-_24px))] gap-8 py-16 lg:grid-cols-[1fr_380px]">
+              <div className="rounded-[2rem] border border-white/10 bg-white/[.04] p-6">
+                <h2 className="text-4xl font-black uppercase">Checkout UI</h2>
+                <div className="mt-6 grid gap-4">
+                  <input className="rounded-2xl border border-white/10 bg-white/[.06] p-4" placeholder="Full name" />
+                  <input className="rounded-2xl border border-white/10 bg-white/[.06] p-4" placeholder="Phone number" />
+                  <textarea className="rounded-2xl border border-white/10 bg-white/[.06] p-4" rows="4" placeholder="Delivery address"></textarea>
+                  <button className="rounded-full bg-astra-gold px-6 py-4 font-black text-black">Place order</button>
+                </div>
+              </div>
+              <aside className="rounded-[2rem] border border-white/10 bg-white/[.04] p-6">
+                <h2 className="text-2xl font-black">Cart</h2>
+                <div className="mt-4 space-y-3 text-white/70">
+                  {cart.length === 0 && <p>No items yet.</p>}
+                  {cart.map((item, index) => <p key={index}>{item.name} - NPR {item.price.toLocaleString("en-IN")}</p>)}
+                </div>
+                <div className="mt-6 border-t border-white/10 pt-4 text-xl font-black">Total: NPR {total.toLocaleString("en-IN")}</div>
+              </aside>
+            </section>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
